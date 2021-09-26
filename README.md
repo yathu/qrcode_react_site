@@ -1,7 +1,5 @@
 # Getting Started with Create React App
 
-![Screenshot ](https://raw.githubusercontent.com/yathu/React-Typescript-TailwindCss-Boilerplate-starter-project/master/localhost_3000_%28iPad%29.png)
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
