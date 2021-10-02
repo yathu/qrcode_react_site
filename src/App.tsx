@@ -6,6 +6,8 @@ import { useDropzone } from 'react-dropzone';
 import * as XLSX from 'xlsx';
 import jszip from 'jszip';
 import { resolve } from 'dns';
+import excelLogo from './assets/excel.svg';
+
 var _ = require('lodash');
 
 
@@ -96,9 +98,9 @@ function App() {
 
     const QrcodeInput = () => {
         return (
-            <form>
+            <form className="w-full">
                 <input
-                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     ref={(input) => {
                         if (input) {
                             input.focus();
@@ -145,60 +147,69 @@ function App() {
         const { getRootProps, getInputProps } = useDropzone({ onDrop })
 
         return (
-            <div className="bg-white" {...getRootProps()}>
+            <div className="bg-white text-center w-full px-4" {...getRootProps()}>
                 <input {...getInputProps()} />
-                <p>Drag 'n' drop some files here, or click to select files</p>
-                <div className="py-8 px-8 max-w-sm mx-auto bg-white rounded-xl shadow-md space-y-2 sm:py-4 sm:flex sm:items-center sm:space-y-0 sm:space-x-6">
-                    <img className="block mx-auto h-24 rounded-full sm:mx-0 sm:flex-shrink-0" src="/img/erin-lindford.jpg" alt="Woman's Face" />
-                    <div className="text-center space-y-2 sm:text-left">
-                        <div className="space-y-0.5">
-                            <p className="text-lg text-black font-semibold">
-                                Erin Lindford
-                            </p>
-                            <p className="text-gray-500 font-medium">
-                                Product Engineer
-                            </p>
-                        </div>
-                        <button className="px-4 py-1 text-sm text-purple-600 font-semibold rounded-full border border-purple-200 hover:text-white hover:bg-purple-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2">Message</button>
-                    </div>
+                <h2 className="font-semibold">
+                    Upload your file
+                </h2>
+
+
+                <div className="border-dashed border-2 border-gray-200 w-full p-6 flex justify-center items-center flex-col my-6">
+                    <img src={excelLogo} alt="Upload excel and generate QRcode" />
+                    <span className="text-gray-400 text-sm">
+                        Drag & Drop your file here
+                    </span>
                 </div>
+
+
             </div>
         )
     };
 
     return (
-        <div className="pt-5 mx-auto px-4 flex-1">
+        <div className="container mx-auto px-4">
 
-            <MyDropzone />
+            <div className="text-center px-4 py-7">
+                <h1 className="mb-4">
+                    QR Code generator
+                </h1>
+                <p className="text-gray-600 text-base font-light">
+                    Free online Simple QR Code Generator. No sign-up required, You can generate bulk QRcode from excel file. Create and Download unlimited free QR code Images.
+                </p>
+            </div>
 
-            <QrcodeInput />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+                <div className="flex flex-col items-center bg-white p-4 pt-8">
 
-            <RenderQrCode />
+                    <h2 className="font-semibold mb-5">
+                        Enter your url or text
+                    </h2>
 
-            <button onClick={DownloadQrCode}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                </svg>
-                <span>Download</span>
-            </button>
+                    <QrcodeInput />
 
+                    <RenderQrCode />
 
-            <button onClick={DownloadQrCode}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                </svg>
-                <span>Download codes</span>
-            </button>
-            <br />
-            <button onClick={downloadZip}
-                className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                    <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                </svg>
-                <span>downloadZip</span>
-            </button>
+                    <button onClick={DownloadQrCode}
+                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                        <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                        </svg>
+                        <span>Download</span>
+                    </button>
+
+                </div>
+                <div className="flex flex-col items-center bg-white p-4 pt-8">
+                    <MyDropzone />
+                    <button onClick={downloadZip}
+                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
+                        <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+                        </svg>
+                        <span>downloadZip</span>
+                    </button>
+
+                </div>
+            </div>
 
         </div>
     );
