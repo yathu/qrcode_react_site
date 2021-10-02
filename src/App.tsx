@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx';
 import jszip from 'jszip';
 import { resolve } from 'dns';
 import excelLogo from './assets/excel.svg';
+import Navbar from './components/navbar';
 
 var _ = require('lodash');
 
@@ -167,50 +168,51 @@ function App() {
     };
 
     return (
-        <div className="container mx-auto px-4">
+        <div>
+            <Navbar />
 
-            <div className="text-center px-4 py-7">
-                <h1 className="mb-4">
-                    QR Code generator
-                </h1>
-                <p className="text-gray-600 text-base font-light">
-                    Free online Simple QR Code Generator. No sign-up required, You can generate bulk QRcode from excel file. Create and Download unlimited free QR code Images.
-                </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-                <div className="flex flex-col items-center bg-white p-4 pt-8">
-
-                    <h2 className="font-semibold mb-5">
-                        Enter your url or text
-                    </h2>
-
-                    <QrcodeInput />
-
-                    <RenderQrCode />
-
-                    <button onClick={DownloadQrCode}
-                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                        <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                        </svg>
-                        <span>Download</span>
-                    </button>
-
+            <div className="container mx-auto px-4 pt-5">
+                <div className="grid grid-cols-8 gap-4">
+                    <div className="col-start-2 col-span-6 text-center py-6">
+                        <h1 className="mb-4">
+                            QR Code generator
+                        </h1>
+                        <p className="text-gray-600 text-base font-light">
+                            Free online Simple QR Code Generator. No sign-up required, You can generate bulk QRcode from excel file. Create and Download unlimited free QR code Images.
+                        </p>
+                    </div>
                 </div>
-                <div className="flex flex-col items-center bg-white p-4 pt-8">
-                    <MyDropzone />
-                    <button onClick={downloadZip}
-                        className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center">
-                        <svg className="fill-current w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-                        </svg>
-                        <span>downloadZip</span>
-                    </button>
-
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
+                    <div className="flex flex-col items-center bg-white p-4 pt-8">
+                        <h2 className="font-semibold mb-5">
+                            Enter your url or text
+                        </h2>
+                        <QrcodeInput />
+                        <RenderQrCode />
+                        <button onClick={DownloadQrCode}
+                            type="button"
+                            className="px-4 py-3 bg-blue-600 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-x-75 transition-transform mx-5 flex"
+                        >
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <span className="ml-2">Download</span>
+                        </button>
+                    </div>
+                    <div className="flex flex-col items-center bg-white p-4 pt-8">
+                        <MyDropzone />
+                        <button onClick={downloadZip}
+                            type="button"
+                            className="px-4 py-3 bg-blue-600 rounded-md text-white outline-none focus:ring-4 shadow-lg transform active:scale-x-75 transition-transform mx-5 flex"
+                        >
+                            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                            <span className="ml-2">Download Zip</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-
         </div>
     );
 }
