@@ -2,18 +2,18 @@ import React, { useCallback } from 'react';
 import './App.css';
 import { saveAs } from 'file-saver';
 import QRCode from 'qrcode'
-import Dropzone, { useDropzone } from 'react-dropzone';
+import { useDropzone } from 'react-dropzone';
 import * as XLSX from 'xlsx';
 import jszip from 'jszip';
 import { resolve } from 'dns';
-// import * as lodash from 'lodash';
 var _ = require('lodash');
 
 
-
+//TODO:excel file validation
 function App() {
     const [previewQrCode, setPreviewQrCode] = React.useState<any>('');
     const [qrInputValue, setQrInputValue] = React.useState<any>('');
+    const [qrCodeArray, setQrCodeArray] = React.useState<any>([]);
 
     React.useEffect(() => {
         const val = qrInputValue ? qrInputValue : 'https://www.qr-generator-online.com/';
@@ -41,14 +41,7 @@ function App() {
         QRCode.toCanvas(val, { errorCorrectionLevel: 'H' }, function (err: any, canvas: any) {
             if (err) throw err;
 
-            console.log("canvas ==>");
-            console.log(canvas);
-
             canvas.toBlob(function (blob: any) {
-
-                console.log("blob ==>");
-                console.log(blob);
-
                 saveAs(blob, fileName);
             });
 
@@ -57,9 +50,6 @@ function App() {
     }
 
     const exportToBlob = (input: any) => {
-
-        console.log("input", input);
-        // let blobImg;
 
         return new Promise((resolve, reject) => {
 
@@ -71,81 +61,31 @@ function App() {
                 .catch((err: any) => {
                     console.error("Error ==>", err)
                 });
-
-
-            // zip.generateAsync({type:"blob"}).then(function(content) {
-            //     saveAs(content, "edm8.zip");
-            // }); 
-
-            // QRCode.toCanvas(input, { errorCorrectionLevel: 'H' }, function (err: any, canvas: any) {
-            //     if (err) throw err;
-
-            //     canvas.toBlob(function (blob: any) {
-            //         console.log("blob data==>", blob);
-            //         resolve(blob);
-            //         // blobImg = blob
-            //     });
-
-            // });
-
-
         });
 
     };
 
     const downloadZip = async () => {
-
-        // zip.file("image.png", blob);
-        const values = ["100", "1001"];
-
         var zip = new jszip();
-        var img = zip.folder("images");
-
 
         new Promise(resolve => {
 
-            console.log(1);
-
-            values.forEach((value) => {
-                console.log(2);
+            qrCodeArray.forEach((value: any) => {
 
                 exportToBlob(value).then((url: any) => {
-
-                    console.log(3);
-
-                    console.log("blobImg url ======>", url);
-
                     zip.file(`${value}.png`, url.split('base64,')[1], { base64: true });
-
                     resolve(true);
-
                 });
             });
 
-
-
-
         }).then(() => {
-            console.log(4);
 
             zip.generateAsync({ type: "blob" }).then(function (content) {
-                // see FileSaver.js
                 saveAs(content, "QRcodes.zip");
+                setQrCodeArray([]);
             });
 
         });
-
-        // zip.file("image.png", blob);
-        // zip.file("file.txt", "content");
-        // zip.file("file1.txt", "content1");
-
-
-        // zip.generateAsync({ type: "blob" }).then(function (content) {
-        //     // see FileSaver.js
-        //     saveAs(content, "example.zip");
-        // });
-        // zip_.file(filename, data, {binary:true});
-        // const blob = exportToBlob("100");
 
     }
 
@@ -180,11 +120,7 @@ function App() {
                 reader.onabort = () => console.log('file reading was aborted')
                 reader.onerror = () => console.log('file reading has failed')
                 reader.onload = (evt: any) => {
-                    // Do whatever you want with the file contents
-                    // const binaryStr = reader.result
-                    // console.log(binaryStr)
 
-                    /* Parse data */
                     const bstr = evt.target.result;
                     const wb = XLSX.read(bstr, { type: 'binary' });
 
@@ -197,27 +133,12 @@ function App() {
                     const data: any = XLSX.utils.sheet_to_json(ws, { header: 1, raw: false });
 
                     /* Update state */
-                    console.log("Data>>>" + data);
-                    console.log(data);
-
                     const final = _.compact(_.flatten(data));
 
-                    console.log("final");
-                    console.log(final);
-
-                    // var myNewArray4 = [].concat(...data);
-
-                    // console.log("myNewArray4:");
-                    // console.log(myNewArray4);
-
-                    // var myNewArray5 = data.flat();
-                    // console.log(myNewArray5);
-
-
+                    setQrCodeArray(final);
                 }
-                // reader.readAsArrayBuffer(file)
-                reader.readAsBinaryString(file);
 
+                reader.readAsBinaryString(file);
             })
 
         }, [])
