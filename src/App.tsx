@@ -8,6 +8,7 @@ import jszip from 'jszip';
 import { resolve } from 'dns';
 import excelLogo from './assets/excel.svg';
 import Navbar from './components/navbar';
+import Footer from './components/footer/footer';
 
 var _ = require('lodash');
 
@@ -214,6 +215,9 @@ function App() {
                     </div>
                 </div>
             </div>
+
+            <Footer />
+
         </div>
     );
 }
