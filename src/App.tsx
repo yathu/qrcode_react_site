@@ -162,7 +162,6 @@ function App() {
                     </span>
                 </div>
 
-
             </div>
         )
     };
@@ -172,6 +171,7 @@ function App() {
             <Navbar />
 
             <div className="container mx-auto px-4 pt-5">
+
                 <div className="grid grid-cols-8 gap-4">
                     <div className="col-start-2 col-span-6 text-center py-6">
                         <h1 className="mb-4">
@@ -182,8 +182,9 @@ function App() {
                         </p>
                     </div>
                 </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4">
-                    <div className="flex flex-col items-center bg-white p-4 pt-8">
+                    <div className="flex flex-col items-center bg-white p-4 pt-8 rounded-lg">
                         <h2 className="font-semibold mb-5">
                             Enter your url or text
                         </h2>
@@ -199,7 +200,7 @@ function App() {
                             <span className="ml-2">Download</span>
                         </button>
                     </div>
-                    <div className="flex flex-col items-center bg-white p-4 pt-8">
+                    <div className="flex flex-col items-center bg-white p-4 pt-8 rounded-lg">
                         <MyDropzone />
                         <button onClick={downloadZip}
                             type="button"
